@@ -2,6 +2,9 @@
 all: ui_tests
 
 dependencies:
+	brew install rbenv
+	rbenv install 3.0.0
+	rbenv local 3.0.0
 	gem install bundler
 	bundle config set path 'vendor/bundle'
 	bundle install
