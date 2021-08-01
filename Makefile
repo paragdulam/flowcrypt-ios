@@ -2,11 +2,10 @@
 all: ui_tests
 
 dependencies:
-	brew install ruby
 	gem install bundler
 	bundle config set path 'vendor/bundle'
 	bundle install
-	
+
 ui_tests: dependencies
 	bundle exec fastlane test_ui --verbose
 
