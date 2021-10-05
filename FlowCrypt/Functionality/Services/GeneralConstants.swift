@@ -31,12 +31,14 @@ enum GeneralConstants {
 }
 
 enum GoogleScope: CaseIterable {
-    case userInfo, mail, contacts
+    case userInfo, mail, compose, modify, contacts
 
     var value: String {
         switch self {
         case .userInfo: return "https://www.googleapis.com/auth/userinfo.profile"
         case .mail: return "https://mail.google.com/"
+        case .compose: return "https://www.googleapis.com/auth/gmail.compose"
+        case .modify: return "https://www.googleapis.com/auth/gmail.modify"
         case .contacts: return "https://www.googleapis.com/auth/contacts.readonly"
         }
     }
