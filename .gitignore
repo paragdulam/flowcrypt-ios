@@ -41,3 +41,4 @@ fastlane/test_output
 fastlane/README.md
 
 test-ci-secrets.json
+FlowCrypt.xcodeproj/project.pbxproj
