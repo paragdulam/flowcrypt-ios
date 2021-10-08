@@ -7,7 +7,8 @@
 //
 
 import Foundation
-import GoogleAPIClientForREST_Gmail
+import GoogleAPIClientForREST
+import GTMSessionFetcher
 import Promises
 
 extension GmailService: RemoteFoldersProviderType {

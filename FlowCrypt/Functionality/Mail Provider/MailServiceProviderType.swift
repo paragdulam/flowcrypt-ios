@@ -7,7 +7,7 @@
 //
 
 import Foundation
-import GoogleAPIClientForREST_Gmail
+import GoogleAPIClientForREST
 
 enum MailServiceProviderType {
     case gmail

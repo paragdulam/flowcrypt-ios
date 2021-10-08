@@ -7,7 +7,7 @@
 //
 
 import Foundation
-import GoogleAPIClientForREST_Gmail
+import GoogleAPIClientForREST
 
 // TODO - Instead of get properties use some DI mechanism
 // to reuse already initialised services

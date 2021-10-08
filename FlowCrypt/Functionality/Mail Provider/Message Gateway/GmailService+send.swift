@@ -8,7 +8,8 @@
 
 import Combine
 import Foundation
-import GoogleAPIClientForREST_Gmail
+import GoogleAPIClientForREST
+import GTMSessionFetcher
 
 extension GmailService: MessageGateway {
     func sendMail(mime: Data) -> Future<Void, Error> {

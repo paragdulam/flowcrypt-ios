@@ -8,7 +8,7 @@
 
 import FlowCryptCommon
 import Foundation
-import GoogleAPIClientForREST_Gmail
+import GoogleAPIClientForREST
 
 struct Message: Hashable {
     let identifier: Identifier

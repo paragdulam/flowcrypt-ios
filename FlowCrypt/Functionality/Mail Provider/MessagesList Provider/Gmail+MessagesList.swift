@@ -7,7 +7,8 @@
 //
 
 import FlowCryptCommon
-import GoogleAPIClientForREST_Gmail
+import GoogleAPIClientForREST
+import GTMSessionFetcher
 import Promises
 
 extension GmailService: MessagesListProvider {

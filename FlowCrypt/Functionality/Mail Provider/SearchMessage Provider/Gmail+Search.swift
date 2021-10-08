@@ -6,7 +6,8 @@
 //  Copyright © 2017-present FlowCrypt a. s. All rights reserved.
 //
 
-import GoogleAPIClientForREST_Gmail
+import GoogleAPIClientForREST
+import GTMSessionFetcher
 import Promises
 
 extension GmailService: MessageSearchProvider {
