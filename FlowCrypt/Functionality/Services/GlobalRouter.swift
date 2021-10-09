@@ -8,6 +8,7 @@
 
 import FlowCryptCommon
 import Promises
+import LocalAuthentication
 import UIKit
 
 protocol GlobalRouterType {
@@ -20,6 +21,8 @@ protocol GlobalRouterType {
 enum GlobalRoutingType {
     // Login using Gmail web view
     case gmailLogin(UIViewController)
+    // use biometrics ( faceid , touchid )
+    case biometricsLogin
     // Login with Google authenticated use
     case other(SessionType)
 }
@@ -38,6 +41,7 @@ final class GlobalRouter: GlobalRouterType {
         return delegate.window
     }
 
+    static public var biometric_passed =  false
     private let userAccountService: UserAccountServiceType
     private let googleService: GoogleUserService
 
@@ -79,9 +83,37 @@ extension GlobalRouter {
         case .gmailLogin(let viewController):
             googleService.signIn(in: viewController)
                 .then(on: .main) { [weak self] session in
+                    GlobalRouter.biometric_passed = true
                     self?.userAccountService.startSessionFor(user: session)
                     self?.proceed(with: session)
                 }
+        case .biometricsLogin:
+
+            let context = LAContext()
+            var error: NSError?
+
+            if context.canEvaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, error: &error) {
+                let reason = "Identify yourself!"
+
+                context.evaluatePolicy(.deviceOwnerAuthenticationWithBiometrics,
+                                       localizedReason: reason) { successss, authenticationError in
+
+                    DispatchQueue.main.async {
+                        if successss {
+                            GlobalRouter.biometric_passed = true
+                            if let user = DataService.shared.currentUser {
+                                let session = self.userAccountService.switchActiveSessionFor(user: user)
+                                self.proceed(with: session)
+                            }
+                        } else {
+                            // error
+                            print("erroe", authenticationError?.localizedDescription ??   "error" );//
+                        }
+                    }
+                }
+            } else {
+                print("no biometry");//
+            }
         case .other(let session):
             userAccountService.startSessionFor(user: session)
             proceed(with: session)

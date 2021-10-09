@@ -47,12 +47,13 @@ extension SigninButtonNode.Input {
 }
 
 enum UserSignInType {
-    case gmail, outlook, other
+    case gmail, outlook, biometrics, other
 
     private var title: String {
         switch self {
         case .gmail: return "sign_in_gmail".localized
         case .outlook: return "sign_in_outlook".localized
+        case .biometrics: return "sign_in_biometrics".localized
         case .other: return "sign_in_other".localized
         }
     }
@@ -61,6 +62,7 @@ enum UserSignInType {
         switch self {
         case .gmail: return UIImage(named: "gmail_icn")
         case .outlook: return UIImage(named: "microsoft-outlook")
+        case .biometrics: return UIImage(named: "biometrics")?.tinted(.mainTextColor)
         case .other: return UIImage(named: "email_icn")?.tinted(.mainTextColor)
         }
     }

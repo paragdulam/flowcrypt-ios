@@ -86,12 +86,16 @@ struct AppStartup {
             return .signIn
         } else if DataService.shared.isSetupFinished {
             logger.logInfo("Setup finished -> mainFlow")
+            if GlobalRouter.biometric_passed {
             return .mainFlow
+            } else {
+                return .signIn // .setupFlow( makeUserIdForSetup(session: session!)!)
+            }
         } else if let session = session, let userId = makeUserIdForSetup(session: session) {
             logger.logInfo("User with session \(session) -> setupFlow")
             return .setupFlow(userId)
         } else {
-            logger.logInfo("User us not signed in -> mainFlow")
+            logger.logInfo("User is not signed in -> mainFlow")
             return .signIn
         }
     }

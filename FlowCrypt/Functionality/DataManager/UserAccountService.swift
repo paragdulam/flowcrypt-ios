@@ -100,21 +100,21 @@ extension UserAccountService: UserAccountServiceType {
     func cleanupSessions() {
         logger.logInfo("Clean up sessions")
 
-        encryptedStorage.getAllUsers()
-            .filter {
-                !encryptedStorage.doesAnyKeyExist(for: $0.email)
-            }
-            .map {
-                logger.logInfo("User session to clean up \($0.email)")
-                return $0.email
-            }
-            .forEach(logOut)
-
-        let users = encryptedStorage.getAllUsers()
-
-        if !users.contains(where: { $0.isActive }), let user = users.first(where: { encryptedStorage.doesAnyKeyExist(for: $0.email ) }) {
-            switchActiveSession(for: user)
-        }
+//        encryptedStorage.getAllUsers()
+//            .filter {
+//                !encryptedStorage.doesAnyKeyExist(for: $0.email)
+//            }
+//            .map {
+//                logger.logInfo("User session to clean up \($0.email)")
+//                return $0.email
+//            }
+//            .forEach(logOut)
+//
+//        let users = encryptedStorage.getAllUsers()
+//
+//        if !users.contains(where: { $0.isActive }), let user = users.first(where: { encryptedStorage.doesAnyKeyExist(for: $0.email ) }) {
+//            switchActiveSession(for: user)
+//        }
     }
 
     @discardableResult
@@ -146,22 +146,23 @@ extension UserAccountService: UserAccountServiceType {
     }
 
     private func logOut(user email: String) {
+        // todo: how to logout , when to clear ( for enterprise )
         logger.logInfo("Log out user with \(email)")
-
-        switch dataService.currentAuthType {
-        case .oAuthGmail:
-            googleService.signOut(user: email)
-        case .password:
-            imap.disconnect()
-        default:
-            logger.logWarning("currentAuthType is not resolved")
-        }
-
-        do {
-            try self.storages.forEach { try $0.logOutUser(email: email) }
-        } catch {
-            logger.logError("storage error \(error)")
-        }
+//
+//        switch dataService.currentAuthType {
+//        case .oAuthGmail:
+//            googleService.signOut(user: email)
+//        case .password:
+//            imap.disconnect()
+//        default:
+//            logger.logWarning("currentAuthType is not resolved")
+//        }
+//
+//        do {
+//            try self.storages.forEach { try $0.logOutUser(email: email) }
+//        } catch {
+//            logger.logError("storage error \(error)")
+//        }
     }
 
     /// cleanup all user sessions

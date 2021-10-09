@@ -21,7 +21,7 @@ final class SignInViewController: TableNodeViewController {
     }
 
     enum Parts: Int, CaseIterable {
-        case links, logo, description, gmail, outlook, other
+        case links, logo, description, gmail, outlook, biometrics, other
     }
 
     private let globalRouter: GlobalRouterType
@@ -101,6 +101,10 @@ extension SignInViewController: ASTableDelegate, ASTableDataSource {
                 return SigninButtonNode(.outlook) { [weak self] in
                     self?.signInWithOutlook()
                 }
+            case .biometrics:
+                return SigninButtonNode(.biometrics) { [weak self] in
+                    self?.signInWithBiometrics()
+                }
             case .other:
                 let otherProviderInput = SigninButtonNode.Input(
                     title: "sign_in_other".localized.attributed(.medium(17), color: .mainTextColor),
@@ -121,6 +125,9 @@ extension SignInViewController {
         globalRouter.signIn(with: .gmailLogin(self))
     }
 
+    private func signInWithBiometrics() {
+        globalRouter.signIn(with: .biometricsLogin)
+    }
     private func signInWithOutlook() {
         showToast("Outlook sign in not implemented yet")
     }
